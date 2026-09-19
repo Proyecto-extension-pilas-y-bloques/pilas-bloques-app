@@ -1,0 +1,12 @@
+Para agregar los bloques de operadores logicos, 
+primero en la carpeta blocksGallery -> Others hay que agregar la logica
+
+una vez agregada la logica, se pasa a blocks.ts para que se "dibuje" el bloque
+
+en export const commonBlocks: BlockType[] = [... ] dentro de los { } poner:
+
+id
+intlID (deberia ser el mismo)
+categoryId en este caso operators
+
+todo entre ` `

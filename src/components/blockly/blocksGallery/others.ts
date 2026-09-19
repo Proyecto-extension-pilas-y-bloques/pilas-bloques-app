@@ -269,4 +269,41 @@ javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, g
 
         return `${funcName}(${args.join(', ')});\n`;
     };
+
+    // BLOQUE AND BASICO, SOLO DOS PARAMETROS BOOLEANOS
+
+    Blockly.Blocks['andBasic'] = {
+        init: function () {
+            this.jsonInit({ // El bloque se crea dentro de estos ( ) del jsonInit
+                type: "andBasic", //Que tipo de bloque es, en este caso un and basico (solo 2 parametros)
+                message0: "%1 Y %2", // cantidad de parametros?
+                colour: sensorsColor, // Usa el mismo color que los otros operadores
+                inputsInline: true,
+                args0: [ //Según el constructor, esto tiene que llamarse args0
+                    {
+                        type: "input_value",
+                        name: "A",
+                        check: "Boolean" // Obliga a que solo encastren bloques verdaderos/falsos
+                    },
+                    {
+                        type: "input_value",
+                        name: "B",
+                        check: "Boolean" // Obliga a que solo encastren bloques verdaderos/falsos
+                    }
+                ],
+                output: "Boolean" // El bloque entero devuelve un booleano
+            });
+        },
+        categoryId: 'operators' // Esta categoria lo asigna a la parte de operadores
+    };
+
+   
+    // Si entendí bien, esta segunda parte, le dice a pilas y bloques que hacer cuando se encuentre con un bloque andBasic
+    javascriptGenerator.forBlock['andBasic'] = function (block: Block, generator: any) { // Es obligatorio poner los tipos con : ¿? al menos para que no lance warning
+        const argument0 = generator.valueToCode(block, 'A', Order.LOGICAL_AND) || 'false'; 
+        const argument1 = generator.valueToCode(block, 'B', Order.LOGICAL_AND) || 'false'; // estas lineas "extraen" los parametros, con la opción de false si está vacío
+
+        const code = `${argument0} && ${argument1}`; // Acá los compara
+        return [code, Order.LOGICAL_AND]; // Devuelve el resultado
+    };
 };
