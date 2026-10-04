@@ -144,7 +144,9 @@
     "leftBorder": "Am I on the left edge?",
     "rightBorder": "Am I on the right edge?",
     "bottomBorder": "Am I on the bottom edge?",
-    "topBorder": "Am I on the top edge?"
+    "topBorder": "Am I on the top edge?",
+    "andBasic": "Basic AND",
+    "OpLogico": "Logical Operator"
   },
   "procedures": {
     "definition": "Define",

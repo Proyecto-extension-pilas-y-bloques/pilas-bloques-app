@@ -174,6 +174,12 @@ export const commonBlocks: BlockType[] = [
     categoryId: 'operators'
   },
 
+  {
+    id: 'OpLogico',
+    intlId: 'OpLogico',
+    categoryId: 'operators'
+  },
+
 ]
 
 

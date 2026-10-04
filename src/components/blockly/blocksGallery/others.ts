@@ -306,4 +306,68 @@ javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, g
         const code = `${argument0} && ${argument1}`; // Acá los compara
         return [code, Order.LOGICAL_AND]; // Devuelve el resultado
     };
+
+
+
+// INTENTO DE DESPLEGABLE LOGICO, imitando opAritmetica
+
+Blockly.Blocks['OpLogico'] = {
+    init: function () {
+        this.jsonInit({
+            type: "OpLogico",
+            message0: "%1 %2 %3", // Hueco A, Desplegable, Hueco B
+            colour: sensorsColor, // mismo color
+            inputsInline: true, // input en linea igual que el and basico
+            args0: [ // los args
+                {
+                    type: "input_value", // hueco 1
+                    name: "A",
+                    check: "Boolean"
+                },
+                {
+                    type: "field_dropdown", // Este sería el desplegable
+                    name: "Operator_Desplegable",
+                    options: [
+                        ["&&", "AND"], // El primero de la lista
+                        ["||", "OR"], // El primer nombre es el que se muestra, el segundo es el valor usado por el getFieldValue
+                        ["!=", "XOR"]
+                    ]
+                },
+                {
+                    type: "input_value", // hueco 2
+                    name: "B",
+                    check: "Boolean"
+                }
+            ],
+            output: "Boolean",
+            categoryId: 'operators' // Se agrupa en operadores
+        });
+        
+    }
+    
 };
+
+javascriptGenerator.forBlock['OpLogico'] = function (block: Block, generator: any) { // Igual que antes, esto le dice a pilas y bloques
+                                                                                     // Que hacer cuando se encuentre con el bloque OpLogico
+
+        const OPERATORS = { // Const OPERATORS, si entendí bien, los Order.LOGCIAL / EQUALITY son los op logicos ya programados con prioridad incluida
+            AND: ['&&', Order.LOGICAL_AND],
+            OR: ['||', Order.LOGICAL_OR],
+            XOR: ['!=', Order.EQUALITY] 
+        } as const; // Esta linea la saqué del opAritmetica, por lo que investigué, es para fijar las opciones, es decir, siempre van a existir las mismas
+
+        const opLogic = block.getFieldValue('Operator_Desplegable') as keyof typeof OPERATORS; // Acá obtiene el AND, OR, XOR
+
+        const operadorJS = OPERATORS[opLogic][0]; //opLogic guarda el simbolo seleccionado, esta const transcribe el simbolo a código según OPERATORS
+        const ordenJS = OPERATORS[opLogic][1]; // esto tambien lo saqué de opAritmetica, solo que aritmetica lo llama order, cambié el nombre para evitar conflictos, en teoría,
+                                               // Esto aplica las prioridades por si el usuario usa muchos bloques adentro de otro
+
+        const argument0 = generator.valueToCode(block, 'A', ordenJS);
+        const argument1 = generator.valueToCode(block, 'B', ordenJS);
+
+        const code = `${argument0} ${operadorJS} ${argument1}`;
+        
+        return [code, ordenJS]; 
+    };
+
+    };
