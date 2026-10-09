@@ -1,4 +1,4 @@
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react'
 import { ChallengeView } from '../../components/challengeView/ChallengeView'
 import { ThemeContextProvider } from '../../theme/ThemeContext'
 import { MemoryRouter, Route, Routes } from 'react-router-dom'

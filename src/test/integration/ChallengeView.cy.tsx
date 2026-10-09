@@ -1,5 +1,5 @@
 import { ChallengeView } from '../../components/challengeView/ChallengeView'
-import { mount } from 'cypress/react18'
+import { mount } from 'cypress/react'
 import { LocalStorage } from '../../localStorage'
 import { SerializedChallenge } from '../../components/serializedChallenge'
 import { EMBER_IMPORTED_CHALLENGE_PATH } from '../../components/ImportedChallengeView'
