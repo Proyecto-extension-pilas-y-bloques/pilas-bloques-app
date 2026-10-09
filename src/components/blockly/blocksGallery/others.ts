@@ -270,16 +270,16 @@ javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, g
         return `${funcName}(${args.join(', ')});\n`;
     };
 
-    // BLOQUE AND BASICO, SOLO DOS PARAMETROS BOOLEANOS
+    // BLOQUE AND BASICO
 
     Blockly.Blocks['andBasic'] = {
         init: function () {
-            this.jsonInit({ // El bloque se crea dentro de estos ( ) del jsonInit
-                type: "andBasic", //Que tipo de bloque es, en este caso un and basico (solo 2 parametros)
-                message0: "%1 && %2", // cantidad de parametros?
-                colour: sensorsColor, // Usa el mismo color que los otros operadores
+            this.jsonInit({
+                type: "andBasic", 
+                message0: `%1 ${t('blocks.andText')} %2`,
+                colour: sensorsColor,
                 inputsInline: true,
-                args0: [ //Según el constructor, esto tiene que llamarse args0
+                args0: [
                     {
                         type: "input_value",
                         name: "A",
@@ -297,30 +297,29 @@ javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, g
         categoryId: 'operators' // Esta categoria lo asigna a la parte de operadores
     };
 
-   
-    // Si entendí bien, esta segunda parte, le dice a pilas y bloques que hacer cuando se encuentre con un bloque andBasic
-    javascriptGenerator.forBlock['andBasic'] = function (block: Block, generator: any) { // Es obligatorio poner los tipos con : ¿? al menos para que no lance warning
-        const argument0 = generator.valueToCode(block, 'A', Order.LOGICAL_AND); 
-        const argument1 = generator.valueToCode(block, 'B', Order.LOGICAL_AND); // estas lineas "extraen" los parametros, con la opción de false si está vacío
 
-        const code = `${argument0} && ${argument1}`; // Acá los compara
-        return [code, Order.LOGICAL_AND]; // Devuelve el resultado
+    // Parte lógica
+    javascriptGenerator.forBlock['andBasic'] = function (block: Block, generator: any) { 
+        const argument0 = generator.valueToCode(block, 'A', Order.LOGICAL_AND); 
+        const argument1 = generator.valueToCode(block, 'B', Order.LOGICAL_AND); 
+
+        const code = `${argument0} && ${argument1}`; 
+        return [code, Order.LOGICAL_AND]; // Devuelve el resultado true o false
     };
 
 
 
-// INTENTO DE DESPLEGABLE LOGICO, imitando opAritmetica
-
+//DESPLEGABLE LOGICO, imitando opAritmetica
 Blockly.Blocks['OpLogico'] = {
     init: function () {
         this.jsonInit({
             type: "OpLogico",
             message0: "%1 %2 %3", // Hueco A, Desplegable, Hueco B
-            colour: sensorsColor, // mismo color
-            inputsInline: true, // input en linea igual que el and basico
-            args0: [ // los args
+            colour: sensorsColor, 
+            inputsInline: true, 
+            args0: [ 
                 {
-                    type: "input_value", // hueco 1
+                    type: "input_value", 
                     name: "A",
                     check: "Boolean"
                 },
@@ -328,9 +327,8 @@ Blockly.Blocks['OpLogico'] = {
                     type: "field_dropdown", // Este sería el desplegable
                     name: "Operator_Desplegable",
                     options: [
-                        ["&&", "AND"], // El primero de la lista
-                        ["||", "OR"], // El primer nombre es el que se muestra, el segundo es el valor usado por el getFieldValue
-                        ["!=", "XOR"]
+                        [t('blocks.andText'), "AND"],
+                        [t('blocks.orText'), "OR"]
                     ]
                 },
                 {
@@ -347,21 +345,17 @@ Blockly.Blocks['OpLogico'] = {
     
 };
 
-javascriptGenerator.forBlock['OpLogico'] = function (block: Block, generator: any) { // Igual que antes, esto le dice a pilas y bloques
-                                                                                     // Que hacer cuando se encuentre con el bloque OpLogico
-
-        const OPERATORS = { // Const OPERATORS, si entendí bien, los Order.LOGCIAL / EQUALITY son los op logicos ya programados con prioridad incluida
+javascriptGenerator.forBlock['OpLogico'] = function (block: Block, generator: any) { 
+        const OPERATORS = {
             AND: ['&&', Order.LOGICAL_AND],
             OR: ['||', Order.LOGICAL_OR],
-            XOR: ['!=', Order.EQUALITY] 
-        } as const; // Esta linea la saqué del opAritmetica, por lo que investigué, es para fijar las opciones, es decir, siempre van a existir las mismas
 
-        const opLogic = block.getFieldValue('Operator_Desplegable') as keyof typeof OPERATORS; // Acá obtiene el AND, OR, XOR
+        } as const; 
 
-        const operadorJS = OPERATORS[opLogic][0]; //opLogic guarda el simbolo seleccionado, esta const transcribe el simbolo a código según OPERATORS
-        const ordenJS = OPERATORS[opLogic][1]; // esto tambien lo saqué de opAritmetica, solo que aritmetica lo llama order, cambié el nombre para evitar conflictos, en teoría,
-                                               // Esto aplica las prioridades por si el usuario usa muchos bloques adentro de otro
+        const opLogic = block.getFieldValue('Operator_Desplegable') as keyof typeof OPERATORS;
 
+        const operadorJS = OPERATORS[opLogic][0]; 
+        const ordenJS = OPERATORS[opLogic][1]; 
         const argument0 = generator.valueToCode(block, 'A', ordenJS);
         const argument1 = generator.valueToCode(block, 'B', ordenJS);
 

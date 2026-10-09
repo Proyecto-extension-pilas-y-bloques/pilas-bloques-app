@@ -145,7 +145,10 @@
     "bottomBorder": "¿Estoy en el borde de abajo?",
     "topBorder": "¿Estoy en el borde de arriba?",
     "andBasic": "And Basico",
-    "OpLogico": "Operador Lógico"
+    "OpLogico": "Operadores Lógicos",
+    "andText": "Y",
+    "orText": "O"
+
   },
   "procedures": {
     "definition": "Definir",

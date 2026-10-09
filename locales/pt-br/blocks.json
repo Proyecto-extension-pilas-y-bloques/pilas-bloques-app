@@ -126,7 +126,9 @@
     "bottomBorder": "Estou na borda inferior?",
     "topBorder": "Estou na borda superior?",
     "andBasic": "AND/E Básico",
-    "OpLogico": "Operador lógico"
+    "OpLogico": "Operadores lógicos",
+    "andText": "E",
+    "orText": "OU"
   },
   "procedures": {
     "definition": "Definir",
