@@ -206,7 +206,7 @@ javascriptGenerator.forBlock['variables_get'] = function (block: Block, generato
     }
 
     return [varName.replace(/[^\w]/g, '_'), Order.ATOMIC];
-};    
+};
 
 javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, generator: any) {
     const rawName = block.getFieldValue('NAME') || 'procedimiento';
@@ -269,4 +269,42 @@ javascriptGenerator.forBlock['procedures_defnoreturn'] = function (block: any, g
 
         return `${funcName}(${args.join(', ')});\n`;
     };
-};
+
+    Blockly.Blocks["or_logic"] = {
+    init: function () {
+      this.jsonInit({
+        type: "or_logic",
+        message0: `%1 ${t("blocks.or_logic")} %2`,
+        colour: sensorsColor,
+        inputsInline: true,
+        args0: [
+          {
+            type: "input_value",
+            name: "A",
+            check: "Boolean",
+          },
+          {
+            type: "input_value",
+            name: "B",
+            check: "Boolean",
+          },
+        ],
+        output: "Boolean",
+      });
+    },
+    categoryId: "operators",
+  };
+
+  javascriptGenerator.forBlock["or_logic"] = function (
+    block: Block,
+    generator: any,
+  ) {
+    const argument0 =
+      generator.valueToCode(block, "A", Order.LOGICAL_OR) || "false";
+    const argument1 =
+      generator.valueToCode(block, "B", Order.LOGICAL_OR) || "false";
+
+    const code = `${argument0} || ${argument1}`;
+    return [code, Order.LOGICAL_OR];
+    };
+}
