@@ -169,7 +169,7 @@ export const commonBlocks: BlockType[] = [
   },
   {
     id:'operadorNot',
-    intlId:'operadorNot',
+    intlId:'notOperator',
     categoryId:'operators'
   }
 ]
