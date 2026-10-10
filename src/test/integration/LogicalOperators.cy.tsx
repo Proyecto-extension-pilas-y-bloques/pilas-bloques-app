@@ -144,8 +144,8 @@ describe('Challenge view with blocks - Logical OR Operator', () => {
     </block>
   </xml>`
 
-  testExecutionWithBlocks('OR test: Verdadero O Verdadero mueve a la derecha', trueOrTrueSolution, 1, false)
-  testExecutionWithBlocks('OR test: Verdadero O Falso mueve a la derecha', trueOrFalseSolution, 1, false)
-  testExecutionWithBlocks('OR test: Falso O Verdadero mueve a la derecha', falseOrTrueSolution, 1, false)
-  testExecutionWithBlocks('OR test: Falso O Falso NO mueve a la derecha', falseOrFalseSolution, 0, false)
+  testExecutionWithBlocks('OR test: True OR True moves to the right', trueOrTrueSolution, 1, false)
+  testExecutionWithBlocks('OR test: True OR False moves to the right', trueOrFalseSolution, 1, false)
+  testExecutionWithBlocks('OR test: False OR True moves to the right', falseOrTrueSolution, 1, false)
+  testExecutionWithBlocks('OR test: False OR False does not move to the right', falseOrFalseSolution, 0, false)
 })
