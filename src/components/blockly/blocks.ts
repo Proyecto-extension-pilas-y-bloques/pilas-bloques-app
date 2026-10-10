@@ -168,8 +168,8 @@ export const commonBlocks: BlockType[] = [
     categoryId: 'sensors'
   },
   {
-    id:'Negacion',
-    intlId:'not_operator',
+    id:'operadorNot',
+    intlId:'operadorNot',
     categoryId:'operators'
   }
 ]
