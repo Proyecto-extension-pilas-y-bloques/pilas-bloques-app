@@ -153,6 +153,11 @@ export const commonBlocks: BlockType[] = [
     categoryId: 'operators'
   },
   {
+    id: 'or_logic',
+    intlId: 'or_logic',
+    categoryId: 'operators'
+  },
+  {
     id: 'Procedimiento',
     intlId: 'Procedures',
     categoryId: 'myprocedures'
@@ -391,8 +396,8 @@ export const sceneBlocks: BlockType[] = [
     intlId: 'bouncePingPong',
     categoryId: 'primitives'
   },
-  
-  
+
+
 ]
 
 const challengeOnlyBlocks: BlockType[] = [
@@ -723,7 +728,7 @@ const challengeOnlyBlocks: BlockType[] = [
     id: 'OpComparacion',
     intlId: 'logic_compare',
     categoryId: 'operators'
-  } 
+  }
 ]
 
 const allBlocks: BlockType[] = commonBlocks.concat(sceneBlocks).concat(challengeOnlyBlocks)
