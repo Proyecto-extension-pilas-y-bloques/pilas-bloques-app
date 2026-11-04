@@ -1,5 +1,6 @@
-import simpleTypeGuard, { SimpleArray, SimpleStringOptional, SimpleNumber, SimpleString, SimpleBooleanOptional, SimpleObjectOptional, SimpleSkip } from 'simple-type-guard';
+import simpleTypeGuard, { SimpleArray, SimpleStringOptional, SimpleNumber, SimpleNumberOptional, SimpleString, SimpleBooleanOptional, SimpleObjectOptional, SimpleSkip } from 'simple-type-guard';
 import { ACTOR, EMPTY } from './creator/Editor/SceneEdition/mapUtils';
+import { ExpectationConfig } from '../staticData/challenges';
 
 //IMPORTANT: remember to bump this version whenever there are breaking changes in the file format.
 export const creatorVersion = 1
@@ -138,7 +139,7 @@ export const sceneObjectByType = (type: SceneType): SceneObject => {
         specificBlocksIds: [
           'RecogerLata',
           'RecogerPapel',
-          /*'SostenerPapel', 
+          /*'SostenerPapel',
           'LlenarTacho', */
           'TocandoPapel',
           'TocandoLata',
@@ -187,10 +188,33 @@ type Assesments = {
   simpleRepetition?: boolean,
   conditionalRepetition?: boolean,
   conditionalAlternative?: boolean,
+  mainNotTooLong?: boolean,
+  proceduresNotTooLong?: boolean,
+  noEmptyProcedures?: boolean,
+  proceduresNamed?: boolean,
+  doesNotNestControlStructures?: boolean,
+  maxProgramLength?: number,
 }
 
 type DecompositionAssessment = { maxProgramLength: number }
 
+export const assesmentsToExpectations = (assesments?: Assesments): ExpectationConfig => {
+  if (!assesments) return {}
+
+  const config: ExpectationConfig = {
+    decomposition: assesments.decomposition ? true : undefined,
+    simpleRepetition: assesments.simpleRepetition,
+    conditionalRepetition: assesments.conditionalRepetition,
+    conditionalAlternative: assesments.conditionalAlternative,
+    mainNotTooLong: assesments.mainNotTooLong,
+    proceduresNotTooLong: assesments.proceduresNotTooLong,
+    noEmptyProcedures: assesments.noEmptyProcedures,
+    proceduresNamed: assesments.proceduresNamed,
+    doesNotNestControlStructures: assesments.doesNotNestControlStructures,
+    maxProgramLength: assesments.maxProgramLength ?? assesments.decomposition?.maxProgramLength,
+  }
+  return Object.fromEntries(Object.entries(config).filter(([, value]) => value !== undefined)) as ExpectationConfig
+}
 
 export const isValidChallenge = (json: unknown): json is SerializedChallenge => {
   const structureIsValid: boolean = simpleTypeGuard<SerializedChallenge>(json, {
@@ -206,6 +230,12 @@ export const isValidChallenge = (json: unknown): json is SerializedChallenge => 
       simpleRepetition: SimpleBooleanOptional,
       conditionalRepetition: SimpleBooleanOptional,
       conditionalAlternative: SimpleBooleanOptional,
+      mainNotTooLong: SimpleBooleanOptional,
+      proceduresNotTooLong: SimpleBooleanOptional,
+      noEmptyProcedures: SimpleBooleanOptional,
+      proceduresNamed: SimpleBooleanOptional,
+      doesNotNestControlStructures: SimpleBooleanOptional,
+      maxProgramLength: SimpleNumberOptional,
       decomposition: new SimpleObjectOptional<DecompositionAssessment>({
         maxProgramLength: SimpleNumber
       })
