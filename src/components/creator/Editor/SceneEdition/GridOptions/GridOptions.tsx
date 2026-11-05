@@ -7,6 +7,8 @@ import { ScenarioEditionButtons } from "./ScenarioEditionButtons";
 import { useThemeContext } from "../../../../../theme/ThemeContext";
 import { ToolBoxEditor } from "../../ChallengeDetailsEdition/ToolBoxEditor/ToolBoxEditor";
 
+import { InitialBlocksEdition } from "../../ChallengeDetailsEdition/InitialBlocksEdition"; // Nuevo botón para bloques iniciales
+
 export const GridOptions = (props: StyleGridProps) => {
     const { theme } = useThemeContext()
 
@@ -24,6 +26,7 @@ export const GridOptions = (props: StyleGridProps) => {
                     <StatementEdition />
                 </Stack>
                 <ToolBoxEditor/>
+                <InitialBlocksEdition />
             {/*<Button>Bloques iniciales</Button> Not in the MVP*/}
         </Stack>
     </>
