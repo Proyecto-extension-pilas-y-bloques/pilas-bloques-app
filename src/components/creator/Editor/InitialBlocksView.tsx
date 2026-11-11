@@ -40,7 +40,7 @@ export const InitialBlocksView = () => {
             challenge.predefinedSolution = xmlCode;
             LocalStorage.saveCreatorChallenge(challenge);
         }
-        navigate('/creador/editar');
+        navigate('/creador/editar', { state: { initialBlocksSaved: true } });
     };
 
     const handleCancel = () => {
