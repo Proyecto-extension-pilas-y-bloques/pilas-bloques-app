@@ -28,6 +28,7 @@ const handleNavigateToBlocks = () => {
             text="Bloques iniciales" // Idealmente luego lo pasamos a: t('initialBlocks.button')
             onClick={handleNavigateToBlocks}
             data-testid="initial-blocks-button" 
+            imageHeight="80px"
         />
 
         <DialogSnackbar
