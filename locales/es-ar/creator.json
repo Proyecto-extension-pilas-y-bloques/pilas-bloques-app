@@ -176,6 +176,10 @@
 		"initialBlocks": "Bloques iniciales"
   	},
 
+	"errors": {
+    	"missingBlocks": "Primero debes seleccionar los bloques disponibles."
+    },
+
 	"importedChallengedHeader": "Desafío creado por la comunidad",
 	"rules": {
 		"button": "Seleccionar reglas",

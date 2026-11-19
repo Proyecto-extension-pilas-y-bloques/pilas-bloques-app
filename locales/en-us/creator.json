@@ -176,7 +176,9 @@
 		"initialBlocks": "Initial blocks"
 	},
 
-
+	"errors": {
+    	"missingBlocks": "You must first select the available blocks."
+  	},
 
 	"importedChallengedHeader": "Challenge created by the community",
 	"rules": {
