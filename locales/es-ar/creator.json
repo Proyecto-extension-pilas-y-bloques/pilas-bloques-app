@@ -170,6 +170,12 @@
 		"prev": "Anterior",
 		"multipleInitialScenarios": "Escenarios iniciales"
 	},
+
+	"moreBtns": {
+		"advancedOptions": "Más Personalizaciones",
+		"initialBlocks": "Bloques iniciales"
+  	},
+
 	"importedChallengedHeader": "Desafío creado por la comunidad",
 	"rules": {
 		"button": "Seleccionar reglas",

@@ -1,4 +1,4 @@
-import { Stack } from "@mui/material";
+import { Stack, Box } from "@mui/material";
 import { SizeEditor, StyleGridProps } from "./SizeEditor";
 import { PBCard } from "../../../../PBCard";
 import { StatementEdition } from "../../ChallengeDetailsEdition/StatementEdition";
@@ -6,30 +6,32 @@ import { TitleEdition } from "../../ChallengeDetailsEdition/TitleEdition";
 import { ScenarioEditionButtons } from "./ScenarioEditionButtons";
 import { useThemeContext } from "../../../../../theme/ThemeContext";
 import { ToolBoxEditor } from "../../ChallengeDetailsEdition/ToolBoxEditor/ToolBoxEditor";
-import { RulesEditor } from "../../ChallengeDetailsEdition/RulesEditor/rulesEditor";
-
-import { InitialBlocksEdition } from "../../ChallengeDetailsEdition/InitialBlocksEdition"; // Nuevo botón para bloques iniciales
+import { AdvancedButtons } from "./AdvancedButtons"; 
 
 export const GridOptions = (props: StyleGridProps) => {
     const { theme } = useThemeContext()
 
-
     return <>
-        <Stack>
-            <PBCard sx={{justifyContent: "center"}}>
-                <Stack sx={{padding: theme.spacing(1), maxWidth: "200px", paddingBottom: 5, paddingTop: 4}}>
-                    <SizeEditor setStyleGrid={props.setStyleGrid} />
-                    <ScenarioEditionButtons/>
-                </Stack>
-            </PBCard>
-                <Stack direction='row'>
+        <Box sx={{ position: 'relative', height: '100%' }}>
+            
+            <Stack spacing={1} sx={{ height: '100%' }}>
+                <PBCard sx={{justifyContent: "center"}}>
+                    <Stack sx={{padding: theme.spacing(1), maxWidth: "200px", paddingBottom: 5, paddingTop: 4}}>
+                        <SizeEditor setStyleGrid={props.setStyleGrid} />
+                        <ScenarioEditionButtons/>
+                    </Stack>
+                </PBCard>
+                
+                <Stack direction='row' spacing={1}>
                     <TitleEdition />
                     <StatementEdition />
                 </Stack>
+                
                 <ToolBoxEditor/>
-                <InitialBlocksEdition />
-                <RulesEditor/>
-            {/*<Button>Bloques iniciales</Button> Not in the MVP*/}
-        </Stack>
+                
+                <AdvancedButtons />
+            </Stack>
+
+        </Box>
     </>
 }

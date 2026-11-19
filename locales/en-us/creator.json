@@ -170,6 +170,14 @@
 		"prev": "Previous",
 		"multipleInitialScenarios": "Initial scenarios"
 	},
+
+	"moreBtns": {
+		"advancedOptions": "More Customizations",
+		"initialBlocks": "Initial blocks"
+	},
+
+
+
 	"importedChallengedHeader": "Challenge created by the community",
 	"rules": {
 		"button": "Select rules",
