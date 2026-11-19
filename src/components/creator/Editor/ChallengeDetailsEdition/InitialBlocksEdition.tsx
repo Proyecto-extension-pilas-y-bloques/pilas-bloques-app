@@ -34,7 +34,7 @@ const handleNavigateToBlocks = () => {
         <DialogSnackbar
             open={showError}
             onClose={() => setShowError(false)}
-            message="Primero debes seleccionar los bloques disponibles en la caja de herramientas." 
+            message="Primero debes seleccionar los bloques disponibles." 
         />
     </>
 }
