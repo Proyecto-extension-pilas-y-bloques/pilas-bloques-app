@@ -9,9 +9,10 @@ import { EmberPreviewButton } from "./ActionButtons/EmberPreviewButton";
 import { PreviewButton } from "./ActionButtons/PreviewButton";
 import { BetaBadge } from "../BetaBadge";
 import { useThemeContext } from "../../../theme/ThemeContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { LocalStorage } from "../../../localStorage";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { DialogSnackbar } from "../../dialogSnackbar/DialogSnackbar";
 import { ShareButton } from "./ActionButtons/ShareChallenge/ShareButton";
 
 export const CreatorEditor = () => {
@@ -20,10 +21,20 @@ export const CreatorEditor = () => {
   const { t } = useTranslation('creator')
 
   const navigate = useNavigate()
+  const location = useLocation()
 
   const challengeExists = LocalStorage.getCreatorChallenge()
-
   const shouldShow = process.env.NODE_ENV !== 'production'
+
+  const [showSavedSnackbar, setShowSavedSnackbar] = useState(
+    !!(location.state as { initialBlocksSaved?: boolean })?.initialBlocksSaved
+  )
+
+  useEffect(() => {
+    if (showSavedSnackbar) {
+      window.history.replaceState(null, '')
+    }
+  }, [showSavedSnackbar])
 
   useEffect(() => {
     if (!challengeExists) navigate('/creador/seleccionar')
@@ -40,6 +51,11 @@ export const CreatorEditor = () => {
               <SceneEdition />
             </Stack>
           </Stack>
+          <DialogSnackbar
+            open={showSavedSnackbar}
+            onClose={() => setShowSavedSnackbar(false)}
+            message="¡Bloques iniciales del desafío guardados correctamente!"
+          />
         </CreatorContextProvider>
         ) : <></>}
     </>

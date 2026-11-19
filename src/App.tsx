@@ -23,6 +23,7 @@ import { PilasBloquesApi } from './pbApi';
 import { ChallengeView } from './components/challengeView/ChallengeView';
 import { PBSession } from './pbSession';
 import { PBD_PATH, PBDView } from './components/pbd/PBDView'; // FIX TEMPORAL PBD
+import { InitialBlocksView } from './components/creator/Editor/InitialBlocksView';
 
 const AnalyticsComponent = () => {
   const location = useLocation();
@@ -115,6 +116,12 @@ const router = createHashRouter([{
     path: "/creador/editar",
     element: <CreatorEditor/>
   },
+
+  {
+    path: "/creador/bloques-iniciales",
+    element: <InitialBlocksView/>
+  },
+  
   {
     path: "/creador/ver",
     element: <CreatorViewMode/>
@@ -126,7 +133,10 @@ const router = createHashRouter([{
   {
     path: "*",
     element: <PageNotFound/>
-  }
+  },
+
+  
+  
 ]}]);
 
 
