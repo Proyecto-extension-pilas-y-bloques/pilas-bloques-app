@@ -1,21 +1,21 @@
-import { Scene, SerializedChallenge, isValidChallenge, sceneIsValid } from '../../components/serializedChallenge';
+import { Scene, SerializedChallenge, assesmentsToExpectations, isValidChallenge, sceneIsValid } from '../../components/serializedChallenge';
 import { Ember } from '../../emberCommunication';
 
 const validScene: Scene = {
     type: "Lita",
-    maps: [[ 
-        ['L', '-'], 
+    maps: [[
+        ['L', '-'],
         ['A&T', '-'],
-        ['L', 'O'], 
+        ['L', 'O'],
         ['T', '-']
      ],
-     [ 
-        ['T', '-'], 
+     [
+        ['T', '-'],
         ['A', '-'],
-        ['T', '-'], 
+        ['T', '-'],
         ['L', '-']
      ]
-    
+
     ]
 }
 
@@ -30,7 +30,7 @@ describe('Scene validity', () => {
         const incompleteScene = {
             type: "Lita"
         }
-        
+
         expect(sceneIsValid(incompleteScene)).toBeFalsy()
     })
 
@@ -97,7 +97,85 @@ describe('serialized challenge validity', () => {
         expect(isValidChallenge(invalidChallenge)).toBeFalsy()
     })
 
+        test('Valid challenge with assesments is valid', () => {
+        const challengeWithAssesments = {...validChallenge, assesments: {
+            simpleRepetition: true,
+            conditionalAlternative: false,
+            mainNotTooLong: true,
+            proceduresNotTooLong: true,
+            noEmptyProcedures: true,
+            proceduresNamed: false,
+            doesNotNestControlStructures: true,
+            maxProgramLength: 5
+        }}
+
+        expect(isValidChallenge(challengeWithAssesments)).toBeTruthy()
+    })
+
+    test('Valid challenge with legacy decomposition assesment is valid', () => {
+        const challengeWithAssesments = {...validChallenge, assesments: { decomposition: { maxProgramLength: 9 } }}
+
+        expect(isValidChallenge(challengeWithAssesments)).toBeTruthy()
+    })
+
+    test('Challenge with an assesment of the wrong type is invalid', () => {
+        const invalidChallenge = {...validChallenge, assesments: { mainNotTooLong: 'yes' }}
+
+        expect(isValidChallenge(invalidChallenge)).toBeFalsy()
+    })
+
+    test('Challenge with a maxProgramLength of the wrong type is invalid', () => {
+        const invalidChallenge = {...validChallenge, assesments: { maxProgramLength: 'five' }}
+
+        expect(isValidChallenge(invalidChallenge)).toBeFalsy()
+    })
+
     test('Serialized scene to ember scene', () => {
         expect(Ember.serializedSceneToEmberScene(validScene)).toBe('new EscenaLita(["[[L,-],[A&T,-],[L,O],[T,-]]","[[T,-],[A,-],[T,-],[L,-]]"])')
     })
+
+    describe('assesments to expectations', () => {
+
+    test('a challenge without assesments has no expectations', () => {
+        expect(assesmentsToExpectations(undefined)).toEqual({})
+        expect(assesmentsToExpectations({})).toEqual({})
+    })
+
+    test('each assesment is translated to its expectation', () => {
+        const assesments = {
+            simpleRepetition: true,
+            conditionalRepetition: true,
+            conditionalAlternative: true,
+            mainNotTooLong: true,
+            proceduresNotTooLong: true,
+            noEmptyProcedures: true,
+            proceduresNamed: true,
+            doesNotNestControlStructures: true
+        }
+
+        expect(assesmentsToExpectations(assesments)).toEqual(assesments)
+    })
+
+    test('only the defined assesments are translated, so the other ones do not override anything', () => {
+        expect(assesmentsToExpectations({ simpleRepetition: true })).toEqual({ simpleRepetition: true })
+    })
+
+    test('assesments set in false are kept, so they can turn off an expectation', () => {
+        expect(assesmentsToExpectations({ simpleRepetition: false })).toEqual({ simpleRepetition: false })
+    })
+
+    test('the legacy decomposition assesment is translated to decomposition with its limit', () => {
+        expect(assesmentsToExpectations({ decomposition: { maxProgramLength: 9 } }))
+            .toEqual({ decomposition: true, maxProgramLength: 9 })
+    })
+
+    test('maxProgramLength has priority over the decomposition one', () => {
+        expect(assesmentsToExpectations({ maxProgramLength: 5, decomposition: { maxProgramLength: 9 } }))
+            .toEqual({ decomposition: true, maxProgramLength: 5 })
+    })
+
+    test('itWorks is not an expectation', () => {
+        expect(assesmentsToExpectations({ itWorks: true })).toEqual({})
+    })
+})
 })

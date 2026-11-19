@@ -10,7 +10,7 @@ import { StatementDescription } from "./StatementDescription";
 import { ChallengeFooter, InfoDrawer } from "./Info/ChallengeFooter";
 import { LocalStorage } from "../../localStorage"
 import { Header } from "../header/Header"
-import { Scene, SceneMap, SerializedChallenge } from "../serializedChallenge";
+import { Scene, SceneMap, SerializedChallenge, assesmentsToExpectations } from "../serializedChallenge";
 import { useTranslation } from "react-i18next";
 import { useThemeContext } from "../../theme/ThemeContext";
 import { useEffect, useMemo, useState } from "react";
@@ -52,6 +52,7 @@ export const ChallengeView = ({ path, height, serializedChallenge }: ChallengeVi
       debugging: sc.stepByStep,
       predefinedSolution: sc.predefinedSolution,
       shouldShowMultipleScenarioHelp: (sc.scene.maps.length > 1),
+      expectations: assesmentsToExpectations(sc.assesments),
       id: 0,
       title: sc.title,
       imageURL: () => `imagenes/sceneImages/${sc.scene.type}/tool.png`
@@ -171,16 +172,16 @@ const HorizontalChallengeWorkspace = ({ challenge, challengeIdentifier, blocklyW
 
   return <Stack direction="row" >
     <Stack direction="row" position="relative" flexWrap={"wrap"} flexGrow={1}>
-      
+
           <Stack sx={{ position:"absolute", zIndex: 10, right: 15, top: 15 }}>
-              
+
               <SolutionButtons direction="row" challengeIdentifier={challengeIdentifier} />
           </Stack>
       {blocklyWorkspace}
     </Stack>
     <Stack>
       <SceneButtons challenge={challenge} running={running} setRunning={setRunning} />
-      {shouldShowMultipleScenariosButton(challenge) && (<MultipleScenariosButton challenge={challenge} disabled={running} />)}     
+      {shouldShowMultipleScenariosButton(challenge) && (<MultipleScenariosButton challenge={challenge} disabled={running} />)}
       <SceneView descriptor={challenge.sceneDescriptor} />
     </Stack>
   </Stack>
@@ -197,26 +198,26 @@ const VerticalChallengeWorkspace = ({ challenge, challengeIdentifier, blocklyWor
   }, [])
 
   return <Stack position={"relative"} flexWrap={"wrap"} flexGrow={1} >
-    
-    
 
-      
+
+
+
       <Stack sx={{ position:"absolute", zIndex: 10, right: 15, top: 15 }} direction="column" spacing={1} alignItems="flex-end">
-            
-           
+
+
             <IconButton sx={{backgroundColor:"background.paper", color:"text.primary"}} onClick={() => setOpenSolution(!openSolution)} size="large">
                 {openSolution ? <CloseIcon /> : <MoreVert />}
             </IconButton>
 
-            
+
             <Collapse in={openSolution} orientation="vertical">
-                
-                <SolutionButtons direction="column" challengeIdentifier={challengeIdentifier} /> 
+
+                <SolutionButtons direction="column" challengeIdentifier={challengeIdentifier} />
             </Collapse>
         </Stack>
       {blocklyWorkspace}
-    
-    
+
+
     <Stack direction='row' marginBottom='5px' justifyContent='space-evenly'>
       <SceneView descriptor={challenge.sceneDescriptor} />
       <Stack margin='10px' justifyContent='space-between'>
@@ -226,6 +227,6 @@ const VerticalChallengeWorkspace = ({ challenge, challengeIdentifier, blocklyWor
         <InfoDrawer open={openDrawer} onClose={() => setOpenDrawer(false)} />
       </Stack>
     </Stack>
-    
+
   </Stack>
 }

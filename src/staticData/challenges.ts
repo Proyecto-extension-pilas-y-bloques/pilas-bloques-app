@@ -45,7 +45,7 @@ export class Challenge {
   hasAutomaticGrading?: boolean
   /**
    * Predefined solution (in XML format) to appear in challenge.
-   * Usually used together with debugging in true 
+   * Usually used together with debugging in true
    * (i.e. when you want the student to fix a bug in the provided solution).
   */
   predefinedSolution?: string
@@ -65,6 +65,12 @@ export type ExpectationConfig = {
   conditionalAlternative?: boolean,
   simpleRepetition?: boolean,
   conditionalRepetition?: boolean
+  mainNotTooLong?: boolean,
+  proceduresNotTooLong?: boolean,
+  noEmptyProcedures?: boolean,
+  proceduresNamed?: boolean,
+  doesNotNestControlStructures?: boolean,
+  maxProgramLength?: number
 }
 
 /**
@@ -309,7 +315,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [[{x:-55,y:50},{x:-150,y:50},{x:-150,y:0},{x:-50,y:0}],[{x:-75,y:0},{x:-75,y:-100},{x:-125,y:-100},{x:-125,y:0}],[{x:-25,y:0},{x:25,y:0},{x:25,y:-100},{x:-25,y:-100},{x:-25,y:0}],[{x:125,y:0},{x:125,y:-100},{x:75,y:-100},{x:75,y:0}],[{x:50,y:0},{x:150,y:0},{x:150,y:50},{x:50,y:50}]],
       [{x:-50,y:0},{x:0,y:0},{x:50,y:0},{x:50,y:50},{x:0,y:50},{x:-50,y:50},{x:-50,y:0}],
-      {xCoty: -50, yCoty: 100}      
+      {xCoty: -50, yCoty: 100}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
@@ -913,7 +919,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [],
       [[{x:-130,y:20},{x:-90,y:20}], [{x:-50,y:20},{x:-10,y:20}], [{x:30,y:20},{x:70,y:20}], [{x:110,y:20},{x:150,y:20}]],
-      {xCoty: -130, yCoty: 20, longitudSegmento: 40}     
+      {xCoty: -130, yCoty: 20, longitudSegmento: 40}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
@@ -933,7 +939,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [],
       [[{x:-130,y:20},{x:-90,y:20}], [{x:-50,y:20},{x:-10,y:20}], [{x:30,y:20},{x:70,y:20}], [{x:110,y:20},{x:150,y:20},{x:150,y:-20}]],
-      {xCoty: -130, yCoty: 20, longitudSegmento: 40}      
+      {xCoty: -130, yCoty: 20, longitudSegmento: 40}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
@@ -1069,7 +1075,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [],
       [[{x:-100,y:-100},{x:-100,y:-50},{x:-50,y:-50},{x:-50,y:0},{x:0,y:0},{x:0,y:50},{x:50,y:50},{x:50,y:100},{x:100,y:100}]],
-      {xCoty: -100, yCoty: -100}      
+      {xCoty: -100, yCoty: -100}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
@@ -1118,7 +1124,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [],
       [[{x:-120,y:-60},{x:-120,y:-20},{x:-80,y:-20},{x:-80,y:20},{x:-40,y:20},{x:-40,y:60},{x:0,y:60},{x:40,y:60},{x:40,y:20},{x:80,y:20},{x:80,y:-20},{x:120,y:-20},{x:120,y:-60}]],
-      {xCoty: -120, yCoty: -60, longitudSegmento: 40}      
+      {xCoty: -120, yCoty: -60, longitudSegmento: 40}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
@@ -2033,7 +2039,7 @@ const challenges: BasicChallenge[] = [
     sceneDescriptor: `new EscenaCoty(
       [],
       [[{x:-130,y:20},{x:-90,y:20}], [{x:-50,y:20},{x:-10,y:20}], [{x:30,y:20},{x:70,y:20}], [{x:110,y:20},{x:150,y:20}]],
-      {xCoty: -130, yCoty: 20, longitudSegmento: 40}     
+      {xCoty: -130, yCoty: 20, longitudSegmento: 40}
     )`,
     toolboxStyle: 'noCategories',
     toolboxBlockIds: [
